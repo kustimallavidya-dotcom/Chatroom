@@ -1,18 +1,17 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import JoinRoom from './components/JoinRoom';
-import Header from './components/Header';
-import MessageBubble from './components/MessageBubble';
-import MessageInput from './components/MessageInput';
-import { Message, ConnectionStatus } from './types';
-import { PeerManager } from './services/peerService';
+import JoinRoom from './components/JoinRoom.tsx';
+import Header from './components/Header.tsx';
+import MessageBubble from './components/MessageBubble.tsx';
+import MessageInput from './components/MessageInput.tsx';
+import { Message, ConnectionStatus } from './types.ts';
+import { PeerManager } from './services/peerService.ts';
 
 function App() {
   const [roomID, setRoomID] = useState<string | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [status, setStatus] = useState<ConnectionStatus>('disconnected');
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
-    // Sync with system preference initially
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
   
@@ -55,7 +54,6 @@ function App() {
     return () => peerManagerRef.current?.destroy();
   }, [roomID]);
 
-  // Security: Auto-destruct on hide
   useEffect(() => {
     const handleVisibility = () => {
       if (document.visibilityState === 'hidden' && roomID) {
@@ -120,6 +118,14 @@ function App() {
           <div className="flex-1 flex flex-col items-center justify-center opacity-30 select-none">
              <svg viewBox="0 0 24 24" height="80" width="80" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.81 9.81 0 0 0 12.04 2z"></path></svg>
              <p className="mt-4 text-sm font-bold uppercase tracking-[0.2em]">Ghost Chat</p>
+          </div>
+        )}
+
+        {status === 'error' && (
+          <div className="flex justify-center py-4">
+             <span className="bg-red-500/10 text-red-600 dark:text-red-400 px-4 py-1 rounded-full text-xs font-medium">
+               Connection error. Please try again.
+             </span>
           </div>
         )}
 
