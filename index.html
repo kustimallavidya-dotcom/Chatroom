@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GhostChat - Secure P2P</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="manifest" href="metadata.json">
+    <style>
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+        
+        body {
+            transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .chat-bg-light {
+            background-color: #e5ddd5;
+            background-image: url("https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png");
+            background-blend-mode: overlay;
+        }
+
+        .chat-bg-dark {
+            background-color: #0b141a;
+            background-image: radial-gradient(circle at 50% 50%, #111b21 0%, #0b141a 100%);
+        }
+    </style>
+    <script type="importmap">
+    {
+      "imports": {
+        "react/": "https://esm.sh/react@^19.2.4/",
+        "react": "https://esm.sh/react@^19.2.4",
+        "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+        "peerjs": "https://esm.sh/peerjs@^1.5.5"
+      }
+    }
+    </script>
+</head>
+<body class="bg-[#f0f2f5] dark:bg-[#0b141a] text-[#111b21] dark:text-[#e9edef] overflow-hidden">
+    <div id="root"></div>
+</body>
+</html>

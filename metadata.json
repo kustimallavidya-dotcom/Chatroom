@@ -1,0 +1,22 @@
+{
+  "name": "Ephemeral Secure Chat",
+  "description": "A private, peer-to-peer ephemeral chat application with a WhatsApp-style UI. Messages are stored in-memory and destroyed on tab switch or close.",
+  "short_name": "GhostChat",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#111b21",
+  "theme_color": "#128C7E",
+  "icons": [
+    {
+      "src": "https://picsum.photos/192/192",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://picsum.photos/512/512",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "requestFramePermissions": []
+}
