@@ -124,7 +124,7 @@ function App() {
         {status === 'error' && (
           <div className="flex justify-center py-4">
              <span className="bg-red-500/10 text-red-600 dark:text-red-400 px-4 py-1 rounded-full text-xs font-medium">
-               Connection error. Please try again.
+               Connection lost. Waiting to reconnect...
              </span>
           </div>
         )}
