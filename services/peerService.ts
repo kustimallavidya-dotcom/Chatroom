@@ -17,6 +17,7 @@ export class PeerManager {
   }
 
   public init(roomID: string) {
+    // Initial state is connecting (waiting for partner)
     this.onStatusChange('connecting');
 
     const peerConfig = {
@@ -38,11 +39,10 @@ export class PeerManager {
 
     this.peer.on('open', (id) => {
       console.log('Host mode active. Waiting for peer...', id);
-      // As host, we just wait for 'connection' event
     });
 
     this.peer.on('connection', (conn) => {
-      console.log('Guest connected to us!');
+      console.log('Partner joined!');
       this.handleConnection(conn);
     });
 
@@ -52,12 +52,11 @@ export class PeerManager {
         this.peer?.destroy();
         this.startAsGuest(guestID, hostID, peerConfig);
       } else if (err.type === 'peer-unavailable') {
-        // This happens if Guest tries to connect to Host who isn't there yet
-        // We can ignore this and let the Guest retry or wait
-        console.log('Target peer not yet available.');
+        // Normal if host isn't there yet
+        console.log('Host not available, waiting...');
       } else {
         console.error('Peer error:', err.type);
-        this.onStatusChange('error');
+        // Don't show error immediately as it might be transient
       }
     });
   }
@@ -67,23 +66,18 @@ export class PeerManager {
     
     this.peer.on('open', () => {
       console.log('Guest mode active. Connecting to Host...');
-      const conn = this.peer!.connect(targetID, { reliable: true });
-      this.handleConnection(conn);
+      this.connectToPartner(targetID);
     });
 
     this.peer.on('connection', (conn) => {
-      // In some race conditions, host might try to connect to guest
       this.handleConnection(conn);
     });
+  }
 
-    this.peer.on('error', (err) => {
-      if (err.type === 'peer-unavailable') {
-         // Host might have left or not joined yet
-         // We stay in connecting state
-      } else {
-        this.onStatusChange('error');
-      }
-    });
+  private connectToPartner(targetID: string) {
+    if (!this.peer) return;
+    const conn = this.peer.connect(targetID, { reliable: true });
+    this.handleConnection(conn);
   }
 
   private handleConnection(conn: DataConnection) {
@@ -100,7 +94,7 @@ export class PeerManager {
     });
 
     conn.on('close', () => {
-      this.onStatusChange('disconnected');
+      this.onStatusChange('connecting'); // Go back to waiting instead of error
     });
 
     conn.on('error', () => {
