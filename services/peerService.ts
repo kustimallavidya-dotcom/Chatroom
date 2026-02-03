@@ -1,5 +1,6 @@
 
-import { Peer, DataConnection } from 'peerjs';
+import { Peer } from 'peerjs';
+import type { DataConnection } from 'peerjs';
 
 export class PeerManager {
   private peer: Peer | null = null;
@@ -18,10 +19,6 @@ export class PeerManager {
   public init(roomID: string) {
     this.onStatusChange('connecting');
 
-    // We try to use the roomID as part of the Peer ID. 
-    // Usually Peer IDs must be unique. We'll use RoomID + '-1' and try to connect to RoomID + '-2'.
-    // If RoomID + '-1' fails because it exists, we become RoomID + '-2' and connect to '-1'.
-    
     const id1 = `${roomID}-ghost-1`;
     const id2 = `${roomID}-ghost-2`;
 
@@ -29,13 +26,11 @@ export class PeerManager {
 
     this.peer.on('open', (id) => {
       console.debug('Peer opened with ID:', id);
-      // Attempt to connect to the other peer if they are already there
       this.attemptConnection(id2);
     });
 
     this.peer.on('error', (err) => {
       if (err.type === 'unavailable-id') {
-        // ID taken, try being the second ghost
         this.peer?.destroy();
         this.peer = new Peer(id2);
         this.peer.on('open', () => {

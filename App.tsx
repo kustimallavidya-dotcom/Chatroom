@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import JoinRoom from './components/JoinRoom.tsx';
-import Header from './components/Header.tsx';
-import MessageBubble from './components/MessageBubble.tsx';
-import MessageInput from './components/MessageInput.tsx';
-import { Message, ConnectionStatus } from './types.ts';
-import { PeerManager } from './services/peerService.ts';
+import JoinRoom from './components/JoinRoom';
+import Header from './components/Header';
+import MessageBubble from './components/MessageBubble';
+import MessageInput from './components/MessageInput';
+import { Message, ConnectionStatus } from './types';
+import { PeerManager } from './services/peerService';
 
 function App() {
   const [roomID, setRoomID] = useState<string | null>(null);

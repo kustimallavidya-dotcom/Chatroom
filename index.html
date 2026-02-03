@@ -27,21 +27,19 @@
             background-image: radial-gradient(circle at 50% 50%, #111b21 0%, #0b141a 100%);
         }
     </style>
-    <script type="importmap">
+<script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@19.2.4",
-    "react-dom/client": "https://esm.sh/react-dom@19.2.4/client",
-    "peerjs": "https://esm.sh/peerjs@1.5.5",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4",
     "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
+    "peerjs": "https://esm.sh/peerjs@^1.5.5"
   }
 }
 </script>
 </head>
 <body class="bg-[#f0f2f5] dark:bg-[#0b141a] text-[#111b21] dark:text-[#e9edef] overflow-hidden">
     <div id="root"></div>
-    <!-- This script tag is essential for the app to start -->
-    <script type="module" src="index.tsx"></script>
+    <script type="module" src="/index.tsx"></script>
 </body>
 </html>
